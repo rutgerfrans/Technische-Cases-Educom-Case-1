@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Technische-Cases-Educom-Case-1</h1>
+        <h2>Weerstation</h2>
+        <input class="weerstation" type="text" value="weerstation">
+        <button id="zoekButton" onclick="GetAPI()">Zoek</button>
+
+    </body>
+    <script>
+        function GetAPI(){
+            fetch("https://data.buienradar.nl/2.0/feed/json").then(response => {
+                response.json().then(data => {
+                    console.log(data);
+                })
+            });
+        }
+    </script>
+</html>
