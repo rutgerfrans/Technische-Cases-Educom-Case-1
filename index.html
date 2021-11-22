@@ -2,18 +2,58 @@
 <html>
     <body>
         <h1>Technische-Cases-Educom-Case-1</h1>
-        <h2>Weerstation</h2>
-        <input class="weerstation" type="text" value="weerstation">
-        <button id="zoekButton" onclick="GetAPI()">Zoek</button>
+        <h2>Meetstation</h2>
+        <label><input id="InputMeetstation" list="DropDown" type="text" value=""></label>
+        <datalist id="DropDown"></datalist>
+        <button id="zoekButton" onclick="GetAPI('https://data.buienradar.nl/2.0/feed/json', getElementById('InputMeetstation').value)">Zoek / ↻</button>
+        <div id="WeatherInfo"></div>
+
 
     </body>
     <script>
-        function GetAPI(){
-            fetch("https://data.buienradar.nl/2.0/feed/json").then(response => {
+        window.onload = Init();
+
+        function Init(){
+            PopulateDropdownList('https://data.buienradar.nl/2.0/feed/json');
+            GetAPI('https://data.buienradar.nl/2.0/feed/json', document.getElementById('InputMeetstation').value);
+        }
+
+        function PopulateDropdownList(url){
+            fetch(url).then(response => { 
                 response.json().then(data => {
-                    console.log(data);
-                })
+                    data.actual.stationmeasurements.forEach(station => {
+                        var option = document.createElement('option');
+                        option.value = station.stationname;
+                        document.getElementById("DropDown").appendChild(option);
+                    });
+                });
             });
+        }
+
+        function GetAPI(url, MeetStation){
+            document.getElementById("WeatherInfo").innerHTML = "";
+            MeetStation != 0 ? fetch(url).then(response => { 
+                response.json().then(data => {
+                    data.actual.stationmeasurements.forEach(station => {
+                        station.stationname.includes(MeetStation) ? PopulateWeatherData(station) : null;
+                    });
+                })
+            }): null;
+        }
+
+        function PopulateWeatherData(MeetStation){
+            var List = document.createElement('ul');
+
+            var Fields = [["Station name: ",MeetStation.stationname],["Weather description: ",MeetStation.weatherdescription],["Temperature: ",MeetStation.temperature + "°C"],
+                ["Feel temperature: ",MeetStation.feeltemperature + "°C"],["Ground temperature: ",MeetStation.groundtemperature + "°C"],["Humidity: ",MeetStation.humidity + "%"],
+                ["Rainfall Last 24 hours: ",MeetStation.rainFallLast24Hour + "mm"],["Rainfall last hour: ",MeetStation.rainFallLastHour + "mm"]];
+
+            Fields.forEach(Field => {
+                var item = document.createElement("li");
+                item.innerHTML = Field[0] + " " + Field[1];
+                List.appendChild(item);
+            });    
+            document.getElementById("WeatherInfo").appendChild(List);
         }
     </script>
 </html>
