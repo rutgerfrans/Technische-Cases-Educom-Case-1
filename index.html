@@ -18,6 +18,7 @@
             GetAPI('https://data.buienradar.nl/2.0/feed/json', document.getElementById('InputMeetstation').value);
         }
 
+        // Maakt een lijst met alle meetstations om uit te kiezen
         function PopulateDropdownList(url){
             fetch(url).then(response => { 
                 response.json().then(data => {
@@ -30,6 +31,7 @@
             });
         }
 
+        // Haalt alle data uit de API van Buienradar op
         function GetAPI(url, MeetStation){
             document.getElementById("WeatherInfo").innerHTML = "";
             MeetStation != 0 ? fetch(url).then(response => { 
@@ -41,6 +43,7 @@
             }): null;
         }
 
+        // Selecteert welke data benodigd is om weer te geven en voegt dit toe aan de div "WeatherInfo"
         function PopulateWeatherData(MeetStation){
             var List = document.createElement('ul');
 
