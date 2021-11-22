@@ -4,3 +4,22 @@ Bouw een applicatie die Realtime met de API communiceert. In deze applicatie kan
 
 ### Oplevering 
 Gebruik een programmeeromgeving naar keuze, waar je – voor zover mogelijk - bekend mee bent en waarin je verwacht dit zo goed mogelijk te kunnen ontwikkelen.  Zet de code met instructies hoe te publiceren/bouwen in een private repository op Github of Gitlab en geef de docent/coach van Educom waarvan je de case hebt gekregen toegang.
+
+### Installatie
+**1. Clone Repo**
+```sh
+git clone https://github.com/rutgerfrans/Technische-Cases-Educom-Case-1.git
+```
+
+**2. Install dependencies**
+```sh
+npm install
+```
+
+**3. Start Applicatie**
+```sh
+npm start
+```
+
+## Author
+[R.F. de Groen](https://rutgerfrans.com/)
